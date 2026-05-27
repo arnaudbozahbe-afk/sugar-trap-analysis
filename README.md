@@ -1,7 +1,6 @@
 # 🍬 Sugar Trap: Blue Ocean Market Gap Analysis
 
 > **Helix CPG Partners** — Strategic Food & Beverage Intelligence  
-> Analyst: [Your Full Name] · [Your Email]
 
 ---
 
@@ -18,7 +17,6 @@ Analysis of **500,000+ products** from the Open Food Facts dataset reveals that 
 | 📓 **Notebook (Google Colab)** | *(paste your Colab link here — File → Share → "Anyone with the link can view")* |
 | 📊 **Dashboard (Streamlit)** | https://plank-panama-prepay.ngrok-free.dev/ |
 | 🎞️ **Presentation (PDF/PPT)** | *(paste your Google Slides or Drive link here — permissions: "Anyone with link can view")* |
-| 🎬 **Video Walkthrough** | *(optional — YouTube unlisted link)* |
 
 > ⚠️ **Before submitting:** Open every link above in an **Incognito/Private window** to verify access without login. The Streamlit link in particular should load fully without asking for credentials.
 
