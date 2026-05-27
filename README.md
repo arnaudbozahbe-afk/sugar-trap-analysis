@@ -19,8 +19,8 @@ Our recommendation is a **High-Protein Granola line** targeting **≥ 15g protei
 
 | Asset | Link |
 |---|---|
-| 📓 Notebook (Google Colab) | *[paste your Colab share link here]* |
-| 📊 Dashboard (Streamlit) | *[paste your Streamlit Cloud link here]* |
+| 📓 Notebook (Google Colab) | *https://colab.research.google.com/drive/1E5u2DW3I9I7S6o3eCLjkSk7_D19dpLHA?usp=sharing* |
+| 📊 Dashboard (Streamlit) | *https://sugar-trap-analysis-hbsybea2ap7kc9v3jeajmb.streamlit.app/* |
 | 🎞️ Presentation | *[paste your Google Slides or PDF link here]* |
 
 
