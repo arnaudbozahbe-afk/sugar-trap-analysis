@@ -1,12 +1,17 @@
-# 🍬 Sugar Trap: Blue Ocean Market Gap Analysis
-
-> **Helix CPG Partners** — Strategic Food & Beverage Intelligence  
+# 🍬 Sugar Trap — Blue Ocean Market Gap Analysis
+### Helix CPG Partners · Strategic Food & Beverage Intelligence
 
 ---
 
 ## A. Executive Summary
 
-Analysis of **500,000+ products** from the Open Food Facts dataset reveals that the global snack market is overwhelmingly dominated by high-sugar, low-protein offerings — over **60% of products** fall in the "Saturated Zone" (high sugar, low protein), confirming the client's hypothesis of a systemic market imbalance. The **Blue Ocean quadrant** (high protein + low sugar) represents only ~25% of current SKUs, with **Nuts & Seeds** and **Protein Bars & Shakes** as the only categories with meaningful presence there today. The top three protein sources driving quality in Blue Ocean products are **Peanut**, **Almond**, and **Whey** — all well-established supply chains accessible to a new entrant. Cross-referencing the Blue Ocean quadrant with EU Nutri-Score grades (A–E) exposes a *double white space*: products combining high protein, low sugar, and a Nutri-Score A/B are almost entirely absent in the **Cereals & Granola** category, making it the clearest, most defensible R&D opportunity. Our recommendation is to launch a **High-Protein Granola line** (≥ 15g protein, < 5g sugar per 100g) using a peanut + whey protein blend, targeting Nutri-Score A/B certification for EU and UK market entry.
+We analysed over **500,000 snack products** from the Open Food Facts database to answer one question: *where is the white space in the snack aisle?*
+
+The answer is clear. More than **60% of products** sit in what we call the "Saturated Zone" — high sugar, low protein — exactly what the market already has too much of. The **Blue Ocean quadrant** (high protein + low sugar) accounts for only ~25% of current products, and even within that space, most categories are thinly populated.
+
+The biggest gap we found isn't in the obvious places. **Cereals & Granola** — a large, high-visibility category — is almost entirely empty at the intersection of high protein and a strong EU Nutri-Score (A or B). That's the double white space: a product that is nutritionally superior *and* carries a front-of-pack label that drives purchase intent in European markets.
+
+Our recommendation is a **High-Protein Granola line** targeting **≥ 15g protein and < 5g sugar per 100g**, built around a **peanut + whey protein blend** — the two most common protein sources in Blue Ocean products today — and engineered for **Nutri-Score A/B** certification for EU and UK market entry.
 
 ---
 
@@ -14,56 +19,36 @@ Analysis of **500,000+ products** from the Open Food Facts dataset reveals that 
 
 | Asset | Link |
 |---|---|
-| 📓 **Notebook (Google Colab)** | *(paste your Colab link here — File → Share → "Anyone with the link can view")* |
-| 📊 **Dashboard (Streamlit)** | https://plank-panama-prepay.ngrok-free.dev/ |
-| 🎞️ **Presentation (PDF/PPT)** | *(paste your Google Slides or Drive link here — permissions: "Anyone with link can view")* |
+| 📓 Notebook (Google Colab) | *[paste your Colab share link here]* |
+| 📊 Dashboard (Streamlit) | *[paste your Streamlit Cloud link here]* |
+| 🎞️ Presentation | *[paste your Google Slides or PDF link here]* |
 
-> ⚠️ **Before submitting:** Open every link above in an **Incognito/Private window** to verify access without login. The Streamlit link in particular should load fully without asking for credentials.
-
----
-
-## C. Technical Explanation
-
-### Data Cleaning Strategy
-
-The Open Food Facts dataset is notoriously noisy — it is crowdsourced, multilingual, and contains tens of thousands of mis-entered nutritional values. The cleaning pipeline applies five sequential rules:
-
-1. **Mandatory field check** — Rows where `product_name`, `sugars_100g`, or `proteins_100g` are null or empty after stripping whitespace are dropped immediately. These fields are non-negotiable for the analysis.
-
-2. **Numeric coercion** — All nutrient columns are force-coerced to numeric via `pd.to_numeric(..., errors='coerce')`. Non-parseable strings (e.g., `"n/a"`, `"<0.5"`) become `NaN` and are then dropped.
-
-3. **Physiological bounds** — Any macro-nutrient value outside `[0, 100]` g per 100g is removed. It is physically impossible to have more than 100g of sugar in 100g of product. Energy is capped at 4,000 kcal/100g (the approximate ceiling for pure fat), removing absurd entries like `99,999 kcal`.
-
-4. **Macro-sum sanity check** — Products where `sugars + proteins + fat > 105g` (allowing 5g for rounding) are removed as data-entry errors.
-
-5. **Deduplication** — Exact duplicates on `product_name` are dropped (keeping the first occurrence), eliminating the same product entered by multiple contributors with slightly different nutritional values.
-
-**Result:** ~57.5% of the raw 500,000 rows were retained — a conservative but defensible cut that prioritises analysis integrity over sample size.
-
-**Column name resilience:** The dataset recently renamed `nutrition_grade_fr` to `nutriscore_grade`. The pipeline handles both names automatically, renaming the legacy column if found, and creating an empty column if neither exists — so the code never crashes on dataset updates.
-
-### Candidate's Choice: Nutri-Score × Protein Heatmap
-
-**What it is:** A heatmap crossing the 8 primary snack categories against EU Nutri-Score grades (A–E), with cell values showing average protein content per 100g.
-
-**Why I added it:** This is the single most business-critical insight in the entire analysis that the brief didn't ask for. A snack manufacturer can build a product that is High Protein + Low Sugar and still *fail commercially* in the EU and UK because front-of-pack Nutri-Score labelling is now mandatory (France, Belgium, Netherlands, Germany, Spain — and expanding). A product scoring D or E due to sodium or saturated fat content will be actively deprioritised by retailers and rejected by health-conscious consumers, regardless of its macro profile.
-
-By cross-referencing the Blue Ocean quadrant with Nutri-Score grade, I identified the **true investable white space**: category × grade combinations where high protein and a favourable label co-exist but very few products currently compete. This transforms a generic "launch a healthy snack" recommendation into a *regulatory-ready product brief* — the specific level of actionability that an R&D team needs to move into development. The finding (Cereals & Granola with Nutri-Score A/B is nearly empty at high protein levels) would not have surfaced from the scatter plot alone.
 
 ---
 
-## Pre-Submission Checklist
+## C. Technical Notes
 
-- [ ] My GitHub Repo is **Public** (verified in Incognito window)
-- [ ] I have uploaded the `.ipynb` notebook file (`sugar_trap_analysis_clean.ipynb`)
-- [ ] I have uploaded the **HTML export** of the notebook (`sugar_trap_analysis.html`)
-- [ ] I have **NOT** uploaded the raw dataset (it is in `.gitignore`)
-- [ ] My code uses **Relative Paths** only (no hardcoded local paths)
-- [ ] My Dashboard link is **publicly accessible** (no login required, tested in Incognito)
-- [ ] My Presentation link is **publicly accessible**
-- [ ] I have updated this `README.md` with Executive Summary and technical notes
-- [ ] I have completed **User Stories 1–4**
-- [ ] I have completed the **Candidate's Choice** challenge and explained it above
+### Data Cleaning
+
+The Open Food Facts dataset is crowdsourced and notoriously noisy — products entered in dozens of languages, many with missing or impossible nutritional values. The cleaning pipeline applies five rules in order:
+
+1. **Mandatory fields** — rows missing `product_name`, `sugars_100g`, or `proteins_100g` are dropped immediately.
+2. **Numeric coercion** — all nutrient columns are force-cast to numeric. Unparseable strings become `NaN` and are dropped.
+3. **Physiological bounds** — any macro value outside `[0, 100]` g per 100g is removed. Energy is capped at 4,000 kcal/100g.
+4. **Macro-sum check** — products where `sugars + proteins + fat > 105g` are removed as data-entry errors (the 5g buffer accounts for rounding).
+5. **Deduplication** — exact duplicates on `product_name` are dropped, keeping the first occurrence.
+
+**Result:** ~57.5% of the 500,000 rows were retained. Conservative, but it keeps the analysis honest.
+
+One practical detail worth noting: the dataset recently renamed the `nutrition_grade_fr` column to `nutriscore_grade`. The pipeline handles both names automatically so the code won't break if you run it against an older or newer version of the dataset.
+
+### Candidate's Choice — Nutri-Score × Protein Heatmap
+
+The scatter plot tells you *where* the Blue Ocean is. The heatmap tells you *which part of it is actually winnable*.
+
+A product can have great macros (high protein, low sugar) and still fail in the EU and UK if it scores D or E on Nutri-Score — front-of-pack labelling is now mandatory in France, Belgium, the Netherlands, Germany, and Spain, and retailers actively deprioritise low-scoring products. Building a product without this dimension in mind is building for a market that doesn't exist.
+
+The heatmap crosses the 8 snack categories against Nutri-Score grades (A–E) and shows average protein content per cell. It makes one thing immediately visible: **Cereals & Granola with Nutri-Score A/B has almost no high-protein products**. That's a gap the scatter plot alone doesn't reveal — and it's the specific level of detail an R&D team needs to move from "launch a healthy snack" to an actual product brief.
 
 ---
 
@@ -71,63 +56,22 @@ By cross-referencing the Blue Ocean quadrant with Nutri-Score grade, I identifie
 
 | File | Description |
 |---|---|
-| `sugar_trap_analysis_clean.ipynb` | Main analysis notebook — Stories 1–4, Bonus, Candidate's Choice |
-| `sugar_trap_analysis.html` | HTML export of the notebook (with rendered charts) |
-| `streamlit_app.py` | Interactive Streamlit dashboard source code |
-| `requirements.txt` | Python dependencies for Streamlit Cloud deployment |
-| `.gitignore` | Prevents the 3GB+ raw CSV from being committed |
-| `README.md` | This file |
+| `sugar_trap_analysis.ipynb` | Main analysis notebook — Stories 1–4, Bonus, Candidate's Choice |
+| `sugar_trap_analysis.html` | HTML export with all rendered charts |
+| `streamlit_app.py` | Interactive dashboard source code |
+| `requirements.txt` | Python dependencies for Streamlit Cloud |
+| `.gitignore` | Keeps the 3GB+ raw CSV out of the repo |
 
 ---
 
-## How to Run Locally
+## Running Locally
 
 ```bash
-# 1. Clone the repo
 git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
 cd YOUR_REPO
-
-# 2. Install dependencies
 pip install -r requirements.txt
-
-# 3. Run the Streamlit dashboard
 streamlit run streamlit_app.py
 ```
 
-The notebook downloads the Open Food Facts dataset automatically from the public CDN — no manual download required. Run it on Google Colab for best performance (the download is faster from Colab's servers).
+The notebook downloads the Open Food Facts dataset directly from the public CDN — no manual file download needed. Running it on Google Colab is faster since the CDN download is quicker from Colab's servers.
 
----
-
-## Original Brief
-
-*The original project brief is preserved below for reference.*
-
----
-
-# Project Brief: The "Sugar Trap" Market Gap Analysis
-
-**Client:** Helix CPG Partners (Strategic Food & Beverage Consultancy)  
-**Deliverable:** Interactive Dashboard, Code Notebook & Insight Presentation
-
-## 1. Business Context
-
-**Helix CPG Partners** advises major food manufacturers on new product development. Our newest client, a global snack manufacturer, wants to launch a "Healthy Snacking" line. They believe the market is oversaturated with sugary treats, but they lack the data to prove where the specific gaps are.
-
-They have hired us to answer one question: **"Where is the 'Blue Ocean' in the snack aisle?"**
-
-## 2. The Data
-
-- **Source:** [Open Food Facts](https://world.openfoodfacts.org/data) — free, open, CC0
-- **Format:** TSV (tab-separated), gzipped
-- **Subset used:** First 500,000 rows (~57% retained after cleaning)
-
-## 3. User Stories Completed
-
-| Story | Status | Deliverable |
-|---|---|---|
-| Story 1: Data Ingestion & Clean-Up | ✅ | Cleaned DataFrame, 5 cleaning rules |
-| Story 2: Category Wrangler | ✅ | 8 high-level buckets, keyword matching |
-| Story 3: Nutrient Matrix | ✅ | Interactive scatter + dashboard filter |
-| Story 4: Recommendation | ✅ | Key Insight box with specific g targets |
-| Bonus: Hidden Gem | ✅ | Top 3 protein sources from ingredients |
-| Candidate's Choice | ✅ | Nutri-Score × Protein heatmap + justification |
